@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% import 'macros.html' as macros %}
+{% from 'bootstrap/form.html' import render_form %}
 
 {% block title %}
     {{ super() }}
@@ -8,15 +9,25 @@
 
 
 {% block content %}
-    {% if user_ip %}
-    <h1>Hello world Platzi, tu IP es {{user_ip}}</h1>
-    {% else %}
-    <a href="{{ url_for('index') }}">Ir a inicio</a>
-    {% endif %}
-    
-    <ul>
-        {% for todo in todos %}
+    <div class="container">
+        {% if user_ip %}
+        <h1>Hello world Platzi, tu IP es {{user_ip}}</h1>
+        {% else %}
+        <a href="{{ url_for('index') }}">Ir a inicio</a>
+        {% endif %}
+        
+        <section>
+            <form action="{{url_for('hello')}}" method="POST">
+                <!--{{login_form.username.label}}
+                {{login_form.username}}-->
+                {{render_form(login_form)}}
+            </form>
+        </section>
+
+        <ul>
+            {% for todo in todos %}
             {{macros.render_todo(todo)}}
-        {% endfor %}
-    </ul>
+            {% endfor %}
+        </ul>
+    </div>    
 {% endblock %}
